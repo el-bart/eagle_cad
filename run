@@ -1,0 +1,23 @@
+#!/bin/bash -ex
+
+if [ -z "$TAG" ]
+then
+  if ! git describe --exact-match --tags > /dev/null 2>&1
+  then
+    TAG="latest"
+  else
+    TAG=$(git describe --exact-match --tags | tr ' ' '\n' | head -1)
+  fi
+else
+  echo "$0: TAG is already explicitly set to '$TAG' - using this one, then"
+fi
+
+[ -z "$DISPLAY" ] || xhost "+si:localuser:$USER"
+
+docker run \
+  -it --rm \
+  -u "$(id -u):$(id -g)" \
+  -e DISPLAY="$DISPLAY" \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+  --read-only \
+  "baszerr/eagle_cad:$TAG" "$@"
