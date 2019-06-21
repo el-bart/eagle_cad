@@ -17,9 +17,11 @@ fi
 docker run \
   -it --rm \
   --name="eagle_$USER" \
+  --network=none \
   -u "$(id -u):$(id -g)" \
   -e DISPLAY="$DISPLAY" \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  -v "$HOME:/mnt/prjs" \
+  -v "$HOME:/mnt/home" \
   -e "HOME=/tmp" \
+  -e QT_X11_NO_MITSHM=1 \
   "baszerr/eagle_cad:$TAG" "$@"
