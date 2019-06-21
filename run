@@ -16,8 +16,10 @@ fi
 
 docker run \
   -it --rm \
+  --name="eagle_$USER" \
   -u "$(id -u):$(id -g)" \
   -e DISPLAY="$DISPLAY" \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  --read-only \
+  -v "$HOME:/mnt/prjs" \
+  -e "HOME=/tmp" \
   "baszerr/eagle_cad:$TAG" "$@"
