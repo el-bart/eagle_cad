@@ -1,3 +1,0 @@
-#!/bin/bash -ex
-mkdir "$HOME/eagle"
-exec eagle
