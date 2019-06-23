@@ -12,7 +12,10 @@ else
   echo "$0: TAG is already explicitly set to '$TAG' - using this one, then"
 fi
 
-[ -z "$DISPLAY" ] || xhost "+si:localuser:$USER"
+CFG="$HOME/.config/eagle_cad"
+mkdir -p "$CFG"
+
+xhost "+si:localuser:$USER"
 
 docker run \
   -it --rm \
@@ -21,7 +24,8 @@ docker run \
   -u "$(id -u):$(id -g)" \
   -e DISPLAY="$DISPLAY" \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  -v "$HOME:/mnt/home" \
-  -e "HOME=/tmp" \
+  -v "$HOME/prjs:/mnt/prjs/" \
+  -e "HOME=/home/user" \
+  -v "$CFG:/home/user/" \
   -e QT_X11_NO_MITSHM=1 \
   "baszerr/eagle_cad:$TAG" "$@"
