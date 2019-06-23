@@ -19,6 +19,7 @@ xhost "+si:localuser:$USER"
 
 docker run \
   -it --rm \
+  --read-only \
   --name="eagle_$USER" \
   --network=none \
   -u "$(id -u):$(id -g)" \
